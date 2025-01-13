@@ -1,0 +1,89 @@
+# OS Files
+**/*.DS_Store
+Thumbs.db
+
+# Microsoft office backup files
+**/~*
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
+
+# Editor settings
+**/*.swp
+**/*.swo
+.vscode/
+.idea/
+
+# Virtualenv
+**/venv/
+**/env/
+
+# Environment variables
+.env
+**/.env
+
+# Secrets
+**/secret*
+
+# RStudio
+**/*.RData
+**/.Ruserdata
+**/.Rhistory
+**/*.Rproj.user
+**/*.Rproj.user*
+# **/*.Rproj
+**/*.Rapp.history
+
+# Big Data
+**/*.db
+**/*.h5
+**/*.hdf5
+
+# Data
+# **/*.csv
+# **/*.tsv
+# **/*.xlsx
+
+# Data dirs
+# **/raw/*
+# **/proc/*
+
+# Compressed
+**/*.tar
+**/*.zip
+**/*.rar
+
+# LaTeX/Sweave
+**/*.tex
+**/*.synctex.gz
+
+# Jupyter Notebook 
+.ipynb_checkpoints/
+
+# PDF
+**/*.pdf
+
+# Logs
+**/*.log
+
+# Authorization keys
+**/*.httr-oauth
+
+# Miscellaneous
+*.cache
+*.lock
+
+
+# Python Eggs
+*.egg-info/
+
+# Keep READMEs
+!**/README.md
+
+# Keep codebooks
+!**/*codebook**
+
+
+**/*.png
+**/*.svg
