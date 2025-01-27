@@ -1,5 +1,13 @@
 services:
 
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./nginx/certbot/conf.d:/etc/nginx/conf.d
+      - ./nginx/data:/etc/letsencrypt
+      - ./nginx/log:/var/log/nginx
+
   flask-backend:
     build:
       context: ./flask_app
