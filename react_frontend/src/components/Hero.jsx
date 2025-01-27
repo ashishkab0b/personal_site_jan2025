@@ -1,15 +1,23 @@
-// src/components/Hero.jsx
-import React from 'react';
-import { Box, Typography, Button, useTheme } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Dialog, DialogTitle, DialogContent, useTheme } from '@mui/material';
 
 export default function Hero() {
   const theme = useTheme();
+  const [open, setOpen] = useState(false);
+
+  const compAffSciDef = `
+    <p>Affective science is the interdisciplinary study of emotions, motivation, and related affective processes, including their biological, psychological, and social dimensions. It seeks to understand how affect influences cognition, behavior, and decision-making in various contexts.</p>
+    <p>Computational affective science applies computational methods, such as natural language processing, machine learning, and simulations, to model, analyze, and predict affective processes. It combines theories from affective science with computational tools to quantify emotions, understand their dynamics, and design affect-aware systems. </p>
+  `;
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <Box
       sx={{
         position: 'relative',
-        height: { xs: '300px', md: '500px' },  // Responsive height
+        height: { xs: '300px', md: '500px' },
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -23,7 +31,7 @@ export default function Hero() {
             rgba(0, 0, 0, 0.5), 
             rgba(0, 0, 0, 0.8)
           ),
-          url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') 
+          url('/src/assets/luangprabang.png') 
           center/cover no-repeat
         `,
         borderRadius: 3,
@@ -49,31 +57,30 @@ export default function Hero() {
           maxWidth: '700px',
           mb: 3,
           textShadow: '1px 1px 6px rgba(0,0,0,0.4)',
+          cursor: 'pointer', // Makes it clear the text is clickable
+          '&:hover': {
+            textShadow: '0px 0px 8px rgba(255,255,255,0.7)',
+          },
         }}
+        onClick={handleOpen} // Open dialog on click
       >
         Computational Affective Scientist
       </Typography>
 
-      {/* <Button
-        variant="contained"
-        size="large"
-        sx={{
-          backgroundColor: theme.palette.secondary.main,
-          color: '#fff',
-          paddingX: 4,
-          paddingY: 1.5,
-          textTransform: 'none',
-          fontWeight: 'bold',
-          borderRadius: '30px',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
-          '&:hover': {
-            backgroundColor: theme.palette.secondary.dark,
-            boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
-          },
-        }}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
       >
-        View My Work
-      </Button> */}
+        <DialogTitle>What is Computational Affective Science?</DialogTitle>
+        <DialogContent>
+          <Typography
+            sx={{ fontSize: '16px', lineHeight: 1.5 }}
+            dangerouslySetInnerHTML={{ __html: compAffSciDef }}
+          />
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 }
