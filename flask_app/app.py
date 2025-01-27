@@ -6,7 +6,7 @@ from logger_setup import setup_logger
 from werkzeug.middleware.proxy_fix import ProxyFix
 
 # Import extensions
-from extensions import db, migrate, jwt, swagger, cors, redis_client, init_extensions
+from extensions import cors, init_extensions
 from config import CurrentConfig
 
 def create_app(config):
@@ -42,17 +42,17 @@ def create_app(config):
         
 
     # Error Handlers    
-    @jwt.unauthorized_loader
-    def custom_unauthorized_response(callback):
-        return jsonify({
-            'error': 'Unauthorized access'
-        }), 401
+    # @jwt.unauthorized_loader
+    # def custom_unauthorized_response(callback):
+    #     return jsonify({
+    #         'error': 'Unauthorized access'
+    #     }), 401
 
-    @jwt.expired_token_loader
-    def custom_expired_token_response(jwt_header, jwt_payload):
-        return jsonify({
-            'error': 'Token expired'
-        }), 401
+    # @jwt.expired_token_loader
+    # def custom_expired_token_response(jwt_header, jwt_payload):
+    #     return jsonify({
+    #         'error': 'Token expired'
+    #     }), 401
         
     @app.errorhandler(404)
     def not_found_error(e):
