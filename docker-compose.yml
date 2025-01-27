@@ -1,13 +1,5 @@
 services:
 
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./nginx/certbot/conf.d:/etc/nginx/conf.d
-      - ./nginx/data:/etc/letsencrypt
-      - ./nginx/log:/var/log/nginx
-
   flask-backend:
     build:
       context: ./flask_app
@@ -37,3 +29,13 @@ services:
       - ./nginx/logs/access.log:/var/log/nginx/access.log
     depends_on:
       - flask-backend
+      
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./nginx/certs:/etc/letsencrypt
+      - ./nginx/www:/var/www/certbot
+    depends_on:
+      - nginx
+    entrypoint: "/bin/sh"
+    # We'll override the command at runtime (see Step 4)
