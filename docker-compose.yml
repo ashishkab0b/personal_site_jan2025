@@ -35,5 +35,3 @@ services:
       - ./nginx/www:/var/www/certbot
     depends_on:
       - nginx
-    entrypoint: "/bin/sh"
-    # We'll override the command at runtime (see Step 4)
