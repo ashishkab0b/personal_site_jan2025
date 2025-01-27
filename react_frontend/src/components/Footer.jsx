@@ -2,6 +2,7 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 export default function Footer() {
   return (
@@ -16,14 +17,14 @@ export default function Footer() {
       }}
     >
       <Typography variant="body2" color="text.secondary">
-        Designed and built with ❤️ in React by{' '}
+        {' '}
         <a
-          href="https://github.com/your-github-username"
+          href="https://github.com/ashishkab0b/personal_site_jan2025"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: 'inherit', textDecoration: 'underline' }}
+          style={{ color: 'inherit', textDecoration: 'none' }}
         >
-          your-name
+          Made with ❤️ in React by Ashish Mehta
         </a>
       </Typography>
     </Box>
