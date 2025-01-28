@@ -18,6 +18,7 @@ def init_extensions(app):
                 "https://m.stripe.network"
                 "http://mehta.fyi",
                 "http://ashish.mehta.fyi",
+                "http://flask-backend:8000",
                 "http://localhost:3000", 
                 "https://www.google.com",  # For Google reCAPTCHA
                 "https://www.gstatic.com"  # For reCAPTCHA assets
