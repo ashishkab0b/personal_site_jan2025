@@ -28,7 +28,7 @@ export default function MailDialog({ open, handleClose }) {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://flask-backend:8000/send_email', formData);
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/send_email`, formData);
       alert(response.data.message);
       handleClose(); // Close the dialog after successful submission
       setFormData({ name: '', email: '', message: '' });
