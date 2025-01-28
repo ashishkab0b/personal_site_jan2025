@@ -30,7 +30,7 @@ def create_app(config):
     from blueprints.api import api_bp
     app.register_blueprint(api_bp, url_prefix='/api')
     from blueprints.contact import contact_bp
-    app.register_blueprint(contact_bp, url_prefix='/contact')
+    app.register_blueprint(contact_bp, url_prefix='/')
 
     # app.register_blueprint(admin_bp, url_prefix='/admin')
     # Health Check
