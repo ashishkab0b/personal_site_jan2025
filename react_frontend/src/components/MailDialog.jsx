@@ -1,3 +1,4 @@
+// react_frontend/src/components/MailDialog.jsx
 import React, { useState } from 'react';
 import {
   Dialog,
@@ -39,7 +40,17 @@ export default function MailDialog({ open, handleClose }) {
   };
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog 
+    open={open} 
+    onClose={handleClose}
+    PaperProps={{
+      sx: {
+        width: '600px', // Set desired width
+        maxWidth: '90vw', // Prevent overflow on small screens
+        height: 'auto', // Adjust height as needed
+      },
+    }}
+    >
       <DialogTitle>Contact Me</DialogTitle>
       <DialogContent>
         <Box
@@ -76,9 +87,17 @@ export default function MailDialog({ open, handleClose }) {
           />
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained" color="primary">
+      <DialogActions
+        sx={{
+          padding: 2, // Adds some padding for spacing
+        }}
+      >
+        <Button 
+        onClick={handleSubmit} 
+        variant="contained" 
+        color="primary"
+        
+        >
           Send
         </Button>
       </DialogActions>
