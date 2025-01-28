@@ -31,8 +31,8 @@ def send_email():
         mail = mt.Mail(
             sender=mt.Address(email="email@emapingbot.com", 
                             name="Mehta.fyi"),
-            to=mt.Address(email=current_app.config['MAIL_SUPPORT_RECIPIENT'], 
-                        name="Ashish Mehta"),
+            to=[mt.Address(email=current_app.config['MAIL_SUPPORT_RECIPIENT'], 
+                        name="Ashish Mehta")],
             subject=subject,
             text=body
         )
