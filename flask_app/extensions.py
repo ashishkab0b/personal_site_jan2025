@@ -12,7 +12,7 @@ def init_extensions(app):
 
     mail.init_app(app)
     cors.init_app(app, resources={
-        r"/api/*": {
+        r"/*": {
             "origins": [
                 "https://js.stripe.com", 
                 "https://m.stripe.network"
