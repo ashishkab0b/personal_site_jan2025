@@ -12,7 +12,7 @@ def init_extensions(app):
 
     mail.init_app(app)
     cors.init_app(app, resources={
-        r"/*": {
+        r"/api/*": {
             "origins": [
                 "http://localhost:3000", 
                 "http://flask-backend:8000",
