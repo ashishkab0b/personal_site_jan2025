@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Dialog, DialogTitle, DialogContent, useTheme } from '@mui/material';
-import bgPic from '../assets/luangprabang.png';
+import bgPic from '../assets/luangprabang.webp';
 
 export default function Hero() {
   const theme = useTheme();
