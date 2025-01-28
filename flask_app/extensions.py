@@ -14,17 +14,18 @@ def init_extensions(app):
     cors.init_app(app, resources={
         r"/*": {
             "origins": [
-                "https://js.stripe.com", 
-                "https://m.stripe.network",
+                "http://localhost:3000", 
+                "http://flask-backend:8000",
                 "http://mehta.fyi",
                 "http://ashish.mehta.fyi",
-                "http://flask-backend:8000",
-                "http://localhost:3000", 
-                "https://www.google.com",  # For Google reCAPTCHA
-                "https://www.gstatic.com"  # For reCAPTCHA assets
+                "https://js.stripe.com", 
+                "https://m.stripe.network",
+                "https://www.google.com",
+                "https://www.gstatic.com"
             ],
             "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
             "allow_headers": ["Authorization", "Content-Type"],
-            "supports_credentials": True,  
+            "expose_headers": ["Content-Type"],
+            "supports_credentials": True
         }
     })
