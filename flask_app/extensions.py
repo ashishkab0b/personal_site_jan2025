@@ -15,7 +15,7 @@ def init_extensions(app):
         r"/*": {
             "origins": [
                 "https://js.stripe.com", 
-                "https://m.stripe.network"
+                "https://m.stripe.network",
                 "http://mehta.fyi",
                 "http://ashish.mehta.fyi",
                 "http://flask-backend:8000",
