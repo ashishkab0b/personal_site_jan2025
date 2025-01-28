@@ -28,10 +28,10 @@ services:
     depends_on:
       - flask-backend
       
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ./nginx/certs:/etc/letsencrypt
-      - ./nginx/www:/var/www/certbot
-    depends_on:
-      - nginx
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./nginx/certs:/etc/letsencrypt
+  #     - ./nginx/www:/var/www/certbot
+  #   depends_on:
+  #     - nginx
