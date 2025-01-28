@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Typography, Dialog, DialogTitle, DialogContent, useTheme } from '@mui/material';
+import bgPic from '../assets/luangprabang.png';
 
 export default function Hero() {
   const theme = useTheme();
@@ -31,7 +32,7 @@ export default function Hero() {
             rgba(0, 0, 0, 0.5), 
             rgba(0, 0, 0, 0.8)
           ),
-          url('/src/assets/luangprabang.png') 
+          url(${bgPic}) 
           center/cover no-repeat
         `,
         borderRadius: 3,
