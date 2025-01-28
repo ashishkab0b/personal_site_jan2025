@@ -1,34 +1,30 @@
 // src/components/ResearchIntro.jsx
+
 import React from 'react'
-import { Box, Typography } from '@mui/material'
+import { Box, Typography, useMediaQuery } from '@mui/material'
+import { useTheme } from '@mui/material/styles';
 
 export default function ResearchIntro() {
+
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box
     sx={{
       display: 'flex',
-      alignItems: 'center', // Centers content vertically
-      // justifyContent: 'space-between', // Ensures space between the label and content
-      // marginBottom: '2rem', // Adjust the margin to your preference
-
-      // mb: 4,
-      // maxWidth: '900px', // Constrain the entire width
-      // mx: 'auto', // Center the container on the page
-      // px: 2, // Add some padding
+      flexDirection: isSmallScreen ? 'column' : 'row',
+      gap: 3,
+      mb: 4,
     }}
-    >
+  >
     {/* Left-aligned label */}
-    <Box 
-    sx={{ 
-      // flexShrink: 0, 
-      // mr: 2, // Space between the label and content
-      textAlign: 'center' 
-    }}
-    >
-    <Typography 
-    variant="h4" 
-    sx={{ color: 'primary.main', textAlign: 'left' }}
-    >
+    <Box sx={{ flexShrink: 0, textAlign: 'left', minWidth: 200 }}>
+        <Typography
+          variant="h4"
+          sx={{ color: 'primary.main', mb: 2 }}
+        >
     Research<br/>Introduction
     </Typography>
     </Box>

@@ -1,7 +1,19 @@
+// react_frontend/src/theme.jsx
+
 import { createTheme } from '@mui/material/styles';
 
 // Muted, Softer Dark Mode Theme
 const theme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,    // Extra small devices
+      sm: 600,  // Small devices
+      md: 960,  // Medium devices
+      lg: 1280, // Large devices
+      xl: 1920, // Extra large devices
+    },
+  },
+
   palette: {
     mode: 'dark',  // Enable Dark Mode
     primary: {
