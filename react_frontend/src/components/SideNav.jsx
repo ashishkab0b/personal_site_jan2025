@@ -92,18 +92,18 @@ export default function SideNav() {
         </ListItem>
 
         {/* Reappraise.it */}
-        {/* <ListItem disablePadding>
+        <ListItem disablePadding>
         <Tooltip title="Chatbot I built to help brainstorm reframings of difficult situations" arrow placement="right">
           <ListItemButton
             component="a"
-            href=""
+            href="https://reappraise.it/chat"
             target="_blank"
             rel="noopener noreferrer"
           >
             <ListItemText primary="Reappraise.it" />
           </ListItemButton>
           </Tooltip>
-        </ListItem> */}
+        </ListItem>
 
         {/* Resources (Notion) */}
         <ListItem disablePadding>
