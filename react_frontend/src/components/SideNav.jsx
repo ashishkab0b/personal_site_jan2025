@@ -16,7 +16,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import profilePic from '../assets/20250111_sf_headshot.png'
+import profilePic from '../assets/20250111_sf_headshot.webp';  // Import the profile picture
 import MailDialog from './MailDialog';  // Import the Mail Dialog
 
 import SvgIcon from '@mui/material/SvgIcon';
