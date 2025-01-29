@@ -49,6 +49,8 @@ export default function SideNav() {
       <StyledAvatar
         alt="Ashish Mehta"
         src={profilePic}
+        onContextMenu={(e) => e.preventDefault()} // Disable right-click
+        draggable="false" // Disable drag-and-drop
       />
 
       <Typography variant="h6" component="div" sx={{ fontWeight: 600 }}>
