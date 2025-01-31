@@ -21,7 +21,7 @@ const projectsData = [
   },
   {
     title: 'Multi-agent Reinforcement Learning Fantasy Football Draft',
-    short_description: 'A simulation study of the 2024 fantasy football draft using multi-agent proximal policy optimization (PPO) reinforcement learning models.',
+    short_description: 'A simulation study of the 2024 fantasy football draft using multi-agent proximal policy optimization (PPO) reinforcement learning models implemented in PyTorch.',
     long_description: 'Fantasy football is a game in which you assemble a team of real-life NFL players and score points based on their performance in games. The first step in the game, known as the draft, involves taking turns picking players at the beginning of the season and is crucially important to the success of your season. In this project, I first scraped data from a range of different NFL data websites. I then used multi-agent reinforcement learning to simulate the 2024 fantasy football draft and identify the best draft strategy. In essence, this involves pitting multiple AI agents against each other in thousands of simulated drafts to learn a winning strategy.',
     icons: [{ name: 'Github', link: 'https://github.com/ashishkab0b/fantasy_football_2024' }]
   }
