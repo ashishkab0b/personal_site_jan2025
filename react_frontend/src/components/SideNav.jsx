@@ -98,7 +98,7 @@ export default function SideNav() {
         <Tooltip title="Chatbot I built to help brainstorm reframings of difficult situations" arrow placement="right">
           <ListItemButton
             component="a"
-            href="https://reappraise.it/chat"
+            href="https://reappraise.it/?pid=site"
             target="_blank"
             rel="noopener noreferrer"
           >
