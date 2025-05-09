@@ -133,8 +133,8 @@ export default function App() {
         <Toolbar />
         <Hero />
         <ResearchIntro />
-        <ResearchProjects />
-        <SideProjects />
+        {/* <ResearchProjects />
+        <SideProjects /> */}
       </Box>
 
       {/* Footer at the bottom */}

@@ -60,7 +60,7 @@ export default function SideNav() {
         Computational Affective Scientist
       </Typography> */}
       <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 2 }}>
-        PhD Candidate<br />Stanford University
+        Postdoctoral Scholar<br />Stanford University
       </Typography>
 
       <List>
@@ -94,7 +94,7 @@ export default function SideNav() {
         </ListItem>
 
         {/* Reappraise.it */}
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
         <Tooltip title="Chatbot I built to help brainstorm reframings of difficult situations" arrow placement="right">
           <ListItemButton
             component="a"
@@ -105,7 +105,7 @@ export default function SideNav() {
             <ListItemText primary="Reappraise.it" />
           </ListItemButton>
           </Tooltip>
-        </ListItem>
+        </ListItem> */}
 
         {/* Resources (Notion) */}
         <ListItem disablePadding>
