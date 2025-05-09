@@ -138,7 +138,7 @@ export default function App() {
       </Box>
 
       {/* Footer at the bottom */}
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
