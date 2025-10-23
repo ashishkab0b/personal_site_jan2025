@@ -1,0 +1,89 @@
+worker_processes auto;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    # Redirect mehta.fyi and its subdomains to ashish.mehta.fyi
+    server {
+        listen 80;
+        server_name mehta.fyi www.mehta.fyi;
+
+        return 301 https://ashish.mehta.fyi$request_uri;
+    }
+
+    server {
+        listen 443 ssl;
+        server_name mehta.fyi www.mehta.fyi;
+
+        ssl_certificate /etc/letsencrypt/live/mehta.fyi/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/mehta.fyi/privkey.pem;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        return 301 https://ashish.mehta.fyi$request_uri;
+    }
+
+    # Main server block for ashish.mehta.fyi
+    server {
+        listen 80;
+        server_name ashish.mehta.fyi www.ashish.mehta.fyi;
+
+        # Handle ACME challenge requests
+        location /.well-known/acme-challenge/ {
+            root /var/www/certbot;
+        }
+
+        # Redirect all other HTTP requests to HTTPS
+        location / {
+            return 301 https://$host$request_uri;
+        }
+    }
+
+    server {
+
+        listen 443 ssl;
+        server_name mehta.fyi ashish.mehta.fyi www.mehta.fyi www.ashish.mehta.fyi;
+
+        ssl_certificate /etc/letsencrypt/live/mehta.fyi/fullchain.pem;
+        ssl_certificate_key /etc/letsencrypt/live/mehta.fyi/privkey.pem;
+
+        ssl_protocols TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+        ssl_ciphers HIGH:!aNULL:!MD5;
+
+        add_header Content-Security-Policy "default-src 'self'; 
+            style-src 'self' 'unsafe-inline'; 
+            img-src 'self' data:;
+            script-src 'self' https://www.google.com https://www.gstatic.com https://js.stripe.com https://m.stripe.network; 
+            frame-src 'self' https://www.google.com https://www.gstatic.com https://js.stripe.com https://m.stripe.network; 
+            connect-src 'self' https://mehta.fyi;" 
+            always;
+
+        # Serve React app
+        location / {
+            root /usr/share/nginx/html;
+            index index.html;
+            try_files $uri /index.html;
+        }
+
+        # Proxy API requests to Flask backend
+        location /api/ {
+            proxy_pass http://flask-backend:8000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        # Error logging
+        error_log /var/log/nginx/error.log;
+        access_log /var/log/nginx/access.log;
+    }
+}

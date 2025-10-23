@@ -17,7 +17,7 @@ FROM nginx:alpine
 
 # Copy Nginx configuration
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-# COPY ./nginx/certbot_nginx.conf /etc/nginx/nginx.conf
+#COPY ./nginx/certbot_nginx.conf /etc/nginx/nginx.conf
 
 # Copy built React files to Nginx's static directory
 COPY --from=react-build /app/dist /usr/share/nginx/html
