@@ -65,6 +65,7 @@ export default function Hero() {
         }}
         onClick={handleOpen} // Open dialog on click
       >
+        AI Researcher
         Computational Affective Scientist
       </Typography>
 
