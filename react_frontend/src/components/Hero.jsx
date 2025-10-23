@@ -58,6 +58,23 @@ export default function Hero() {
           maxWidth: '700px',
           mb: 3,
           textShadow: '1px 1px 6px rgba(0,0,0,0.4)',
+          // cursor: 'pointer', // Makes it clear the text is clickable
+          // '&:hover': {
+          //   textShadow: '0px 0px 8px rgba(255,255,255,0.7)',
+          // },
+        }}
+        // onClick={handleOpen} // Open dialog on click
+      >
+        AI Researcher
+      </Typography>
+
+      <Typography
+        variant="h5"
+        component="h2"
+        sx={{
+          maxWidth: '700px',
+          mb: 3,
+          textShadow: '1px 1px 6px rgba(0,0,0,0.4)',
           cursor: 'pointer', // Makes it clear the text is clickable
           '&:hover': {
             textShadow: '0px 0px 8px rgba(255,255,255,0.7)',
@@ -65,7 +82,6 @@ export default function Hero() {
         }}
         onClick={handleOpen} // Open dialog on click
       >
-        AI Researcher
         Computational Affective Scientist
       </Typography>
 
