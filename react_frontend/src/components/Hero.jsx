@@ -51,7 +51,7 @@ export default function Hero() {
         Ashish Mehta
       </Typography>
 
-      <Typography
+      {/* <Typography
         variant="h5"
         component="h2"
         sx={{
@@ -66,7 +66,7 @@ export default function Hero() {
         // onClick={handleOpen} // Open dialog on click
       >
         AI Researcher
-      </Typography>
+      </Typography> */}
 
       <Typography
         variant="h5"
@@ -82,6 +82,7 @@ export default function Hero() {
         }}
         onClick={handleOpen} // Open dialog on click
       >
+        AI Researcher <br />
         Computational Affective Scientist
       </Typography>
 
