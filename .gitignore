@@ -99,3 +99,5 @@ react_frontend/src/components/CareerValues.jsx
 !react_frontend/src/assets/headshot.jpg
 
 nginx/certs/*
+
+**/_mount_probe
