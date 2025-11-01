@@ -15,7 +15,7 @@ RUN npm run build
 # Step 2: Use Nginx to Serve the Built React App
 FROM nginx:alpine
 
-# Copy Nginx configuration (not because i'm mounting it in docker-compose)
+# Copy Nginx configuration
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 # COPY ./nginx/certbot_nginx.conf /etc/nginx/nginx.conf
 
