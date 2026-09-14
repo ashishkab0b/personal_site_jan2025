@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify
 from werkzeug.exceptions import HTTPException
 from logger_setup import setup_logger
 from werkzeug.middleware.proxy_fix import ProxyFix
+from analytics_store import init_analytics_store
 
 # Import extensions
 from extensions import cors, init_extensions
@@ -17,7 +18,7 @@ def create_app(config):
     # Create and configure the Flask app
     app = Flask(__name__)
     app.config.from_object(config)
-    app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+    app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1)
 
     # Initialize logger
     logger = setup_logger()
@@ -25,6 +26,7 @@ def create_app(config):
 
     # Initialize Flask extensions
     init_extensions(app)
+    init_analytics_store(app)
     
 
     # Register Blueprints
@@ -32,6 +34,10 @@ def create_app(config):
     app.register_blueprint(api_bp, url_prefix='/api')
     from blueprints.contact import contact_bp
     app.register_blueprint(contact_bp, url_prefix='/api')
+    from blueprints.analytics import analytics_bp
+    app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
+    from blueprints.admin import admin_bp
+    app.register_blueprint(admin_bp, url_prefix='/api/admin')
 
     # app.register_blueprint(admin_bp, url_prefix='/admin')
     # Health Check

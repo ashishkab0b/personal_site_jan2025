@@ -1,0 +1,8 @@
+# Install with:
+#   sudo cp scripts/certbot-renew.cron /etc/cron.d/personal-site-certbot-renew
+#
+# Cron requires an absolute project path. Logs are appended under this repo.
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+17 3,15 * * * ashish cd /home/ashish/personal_site_jan2025 && ./scripts/renew_certs.sh >> /home/ashish/personal_site_jan2025/logs/certbot-renew.log 2>&1

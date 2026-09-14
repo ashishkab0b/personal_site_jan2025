@@ -8,6 +8,8 @@ services:
       - "8000"
     volumes:
       - ./logs/flask:/app/logs
+      - ./data/flask:/app/data
+      - ./nginx/logs:/app/nginx_logs:ro
     env_file:
       - ./flask_app/.env
     environment:

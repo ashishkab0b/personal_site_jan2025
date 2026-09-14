@@ -103,3 +103,6 @@ react_frontend/src/components/CareerValues.jsx
 nginx/certs/*
 
 **/_mount_probe
+# Local analytics/runtime data
+data/
+

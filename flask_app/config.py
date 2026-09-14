@@ -6,6 +6,16 @@ load_dotenv()
 
 class BaseConfig:
     
+    SECRET_KEY = os.getenv('SECRET_KEY', 'dev-insecure-admin-session-key')
+    PERMANENT_SESSION_LIFETIME = timedelta(hours=12)
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Strict'
+
+    ADMIN_PASSWORD_HASH = os.getenv('ADMIN_PASSWORD_HASH')
+    ANALYTICS_DB_PATH = os.getenv('ANALYTICS_DB_PATH', 'data/analytics.sqlite3')
+    MAXMIND_DB_DIR = os.getenv('MAXMIND_DB_DIR', 'data/geoip')
+    NGINX_ACCESS_LOG_PATH = os.getenv('NGINX_ACCESS_LOG_PATH', 'nginx/logs/access.log')
+    
 
     MAIL_SERVER = 'live.smtp.mailtrap.io'
     MAIL_PORT = 587
@@ -29,6 +39,9 @@ class ProductionConfig(BaseConfig):
     PREFERRED_URL_SCHEME = "https"
     SESSION_COOKIE_SECURE = True
     REMEMBER_COOKIE_SECURE = True
+    ANALYTICS_DB_PATH = os.getenv('ANALYTICS_DB_PATH', '/app/data/analytics.sqlite3')
+    MAXMIND_DB_DIR = os.getenv('MAXMIND_DB_DIR', '/app/data/geoip')
+    NGINX_ACCESS_LOG_PATH = os.getenv('NGINX_ACCESS_LOG_PATH', '/app/nginx_logs/access.log')
     
     REDIS_HOST = "redis"
     REDIS_PASSWORD = os.getenv("REDIS_PASSWORD", None)
