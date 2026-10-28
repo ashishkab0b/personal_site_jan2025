@@ -1,7 +1,7 @@
 // src/App.jsx
 
-import { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -16,17 +16,24 @@ import Hero from './components/Hero';
 import ResearchIntro from './components/ResearchIntro';
 import AdminPage from './components/AdminPage';
 import AnalyticsBeacon from './components/AnalyticsBeacon';
+import CvPage from './components/CvPage';
 
 const drawerWidth = 260;
 
 function SiteLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    document.title = /^\/cv\/?$/i.test(pathname) ? 'CV | Ashish Mehta' : 'Ashish Mehta';
+    if (!window.location.hash) window.scrollTo(0, 0);
+  }, [pathname]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawer = <SideNav />;
+  const drawer = <SideNav onNavigate={() => setMobileOpen(false)} />;
 
   return (
     <>
@@ -99,8 +106,7 @@ function SiteLayout() {
         }}
       >
         <Toolbar />
-        <Hero />
-        <ResearchIntro />
+        <Outlet />
       </Box>
     </>
   );
@@ -112,7 +118,10 @@ export default function App() {
       <AnalyticsBeacon />
       <Routes>
         <Route path="/admin/*" element={<AdminPage />} />
-        <Route path="*" element={<SiteLayout />} />
+        <Route element={<SiteLayout />}>
+          <Route path="/cv" element={<CvPage />} />
+          <Route path="*" element={<><Hero /><ResearchIntro /></>} />
+        </Route>
       </Routes>
     </Router>
   );

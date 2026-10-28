@@ -1,6 +1,6 @@
 // src/components/SideNav.jsx
-import { React, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import PropTypes from 'prop-types';
 import {
   List,
   ListItem,
@@ -12,12 +12,9 @@ import {
   IconButton,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import EmailIcon from '@mui/icons-material/Email';
-import axios from 'axios';
 import Tooltip from '@mui/material/Tooltip';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import profilePic from '../assets/headshot.jpg';  // Import the profile picture
-import MailDialog from './MailDialog';  // Import the Mail Dialog
 
 import SvgIcon from '@mui/material/SvgIcon';
 
@@ -35,12 +32,8 @@ const StyledAvatar = styled(Avatar)({
   marginBottom: '1rem',
 });
 
-export default function SideNav() {
-  
-  const [openMailDialog, setOpenMailDialog] = useState(false);
-
-  const handleOpenMailDialog = () => setOpenMailDialog(true);
-  const handleCloseMailDialog = () => setOpenMailDialog(false);
+export default function SideNav({ onNavigate }) {
+  const { pathname } = useLocation();
 
 
   return (
@@ -65,14 +58,26 @@ export default function SideNav() {
 
       <List>
 
-        {/* CV (Google Doc) */}
         <ListItem disablePadding>
-          <Tooltip title="Curriculum Vitae on Google Docs" arrow placement="right">
           <ListItemButton
-            component="a"
-            href="https://docs.google.com/document/d/1FfPnORHNtl72gVfcxily_1BDBJIbSboCpsPfdgXnNI0/edit?tab=t.0"
-            target="_blank"
-            rel="noopener noreferrer"
+            component={Link}
+            to="/"
+            selected={pathname === '/'}
+            aria-current={pathname === '/' ? 'page' : undefined}
+            onClick={onNavigate}
+          >
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+
+        <ListItem disablePadding>
+          <Tooltip title="Curriculum Vitae" arrow placement="right">
+          <ListItemButton
+            component={Link}
+            to="/cv"
+            selected={/^\/cv\/?$/i.test(pathname)}
+            aria-current={/^\/cv\/?$/i.test(pathname) ? 'page' : undefined}
+            onClick={onNavigate}
           >
             <ListItemText primary="CV" />
           </ListItemButton>
@@ -108,7 +113,7 @@ export default function SideNav() {
         </ListItem> */}
 
         {/* Resources (Notion) */}
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <Tooltip title="A mixed bag of tips, code bits, and other helpful resources" arrow placement="right">
           <ListItemButton
             component="a"
@@ -119,13 +124,13 @@ export default function SideNav() {
             <ListItemText primary="Resources" />
           </ListItemButton>
           </Tooltip>
-        </ListItem>
+        </ListItem> */}
 
 
-        {/* Contact Button (Now Opens Dialog) */}
+        {/* Direct email contact */}
         <ListItem disablePadding>
           <Tooltip title="Send me a message" arrow placement="right">
-            <ListItemButton onClick={handleOpenMailDialog}>
+            <ListItemButton component="a" href="mailto:ashm@stanford.edu">
               <ListItemText primary="Contact" />
             </ListItemButton>
           </Tooltip>
@@ -164,9 +169,11 @@ export default function SideNav() {
           </Box>
         </ListItem>
       </List>
-      {/* Mail Form Dialog */}
-      <MailDialog open={openMailDialog} handleClose={handleCloseMailDialog} />
       
     </Box>
   )
 }
+
+SideNav.propTypes = {
+  onNavigate: PropTypes.func,
+};
