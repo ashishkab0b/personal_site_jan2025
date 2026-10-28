@@ -1,53 +1,72 @@
-# flask_app/blueprints/contact.py
+from flask import Blueprint, current_app, jsonify, request
+import requests
 
-from flask import Blueprint, request, g, Response, jsonify, current_app
-from datetime import timedelta, datetime, timezone
-from zoneinfo import ZoneInfo
-import mailtrap as mt
-
-from functools import wraps
 
 contact_bp = Blueprint('contact', __name__)
+TEST_SITE_KEY = '1x00000000000000000000AA'
+TEST_SECRET_KEY = '1x0000000000000000000000000000000AA'
+UNAVAILABLE = 'Email verification is temporarily unavailable. Please try again later.'
 
-@contact_bp.route('/send_email', methods=['POST'])
-def send_email():
-    
-    # Get data from request
-    data = request.get_json()
-    name = data.get('name')
-    email = data.get('email')
-    message = data.get('message')
-    
-    current_app.logger.debug(f"Entered send_email route with data: {data}.")
-    
-    # Validate data
-    if not name or not email or not message:
-        return jsonify({'error': 'Missing required fields'}), 400
-    
-    # Construct email 
-    subject = f"Message from {name} on mehta.fyi"
-    body = f"Name: {name}\n\nEmail:\n{email}\n\nMessage:\n{message}"
-    
-    # Send email
+
+def verification_settings():
+    site = current_app.config.get('TURNSTILE_SITE_KEY', '')
+    secret = current_app.config.get('TURNSTILE_SECRET_KEY', '')
+    local_debug = current_app.debug and request.host.split(':')[0] in {'localhost', '127.0.0.1'}
+    if local_debug and not site and not secret:
+        return TEST_SITE_KEY, TEST_SECRET_KEY, True
+    dummy = any(key.startswith(('1x000000', '2x000000', '3x000000')) for key in (site, secret))
+    if not site or not secret or dummy or not current_app.config.get('MAIL_SUPPORT_RECIPIENT'):
+        return None
+    return site, secret, False
+
+
+@contact_bp.after_request
+def prevent_caching(response):
+    response.headers['Cache-Control'] = 'no-store'
+    return response
+
+
+@contact_bp.route('/contact/config', methods=['GET'])
+def contact_config():
+    settings = verification_settings()
+    if not settings:
+        return jsonify({'error': UNAVAILABLE}), 503
+    return jsonify({'siteKey': settings[0]})
+
+
+@contact_bp.route('/contact/email', methods=['POST'])
+def reveal_email():
+    if request.content_length and request.content_length > 4096:
+        return jsonify({'error': 'Invalid verification request.'}), 413
+    data = request.get_json(silent=True)
+    token = data.get('turnstileToken') if isinstance(data, dict) else None
+    if not isinstance(token, str) or not token.strip() or len(token) > 2048:
+        return jsonify({'error': 'Please complete verification to see the email address.'}), 400
+
+    settings = verification_settings()
+    if not settings:
+        return jsonify({'error': UNAVAILABLE}), 503
+    _, secret, test_mode = settings
     try:
-        mail = mt.Mail(
-            sender=mt.Address(email="email@emapingbot.com", 
-                            name="Mehta.fyi"),
-            to=[mt.Address(email=current_app.config['MAIL_SUPPORT_RECIPIENT'], 
-                        name="Ashish Mehta")],
-            subject=subject,
-            text=body
+        response = requests.post(
+            'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+            data={'secret': secret, 'response': token},
+            timeout=(3.05, 5),
         )
-        client = mt.MailtrapClient(token=current_app.config['MAILTRAP_API_TOKEN'])
-        response = client.send(mail)
-        current_app.logger.debug(f"Mailtrap response: {response}")
-    except Exception as e:
-        current_app.logger.error(f"Error sending email")
-        current_app.logger.exception(e)
-        return jsonify({'error': 'Error sending email'}), 500
-    
-    
-    return jsonify({'message': 'Email sent'}), 200
+        response.raise_for_status()
+        result = response.json()
+    except (requests.RequestException, ValueError):
+        current_app.logger.warning('Email verification service unavailable')
+        return jsonify({'error': UNAVAILABLE}), 503
 
+    valid = isinstance(result, dict) and result.get('success') is True
+    if valid and not test_mode:
+        hosts = current_app.config.get('TURNSTILE_ALLOWED_HOSTNAMES', set())
+        action = 'contact-email'
+        hostname = result.get('hostname')
+        valid = isinstance(hostname, str) and hostname in hosts and result.get('action') == action
+    if not valid:
+        return jsonify({'error': 'Verification failed or expired. Please try again.'}), 400
 
-    
+    # The address only leaves the server after the token, hostname, and action pass.
+    return jsonify({'email': current_app.config['MAIL_SUPPORT_RECIPIENT']})

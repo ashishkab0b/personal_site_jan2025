@@ -25,6 +25,17 @@ class BaseConfig:
     MAIL_USE_TLS = True
     MAIL_USE_SSL = False
     MAIL_SUPPORT_RECIPIENT = os.environ['MAIL_SUPPORT_RECIPIENT']
+
+    TURNSTILE_SITE_KEY = os.getenv('TURNSTILE_SITE_KEY', '').strip()
+    TURNSTILE_SECRET_KEY = os.getenv('TURNSTILE_SECRET_KEY', '').strip()
+    TURNSTILE_ALLOWED_HOSTNAMES = {
+        hostname.strip().lower()
+        for hostname in os.getenv(
+            'TURNSTILE_ALLOWED_HOSTNAMES',
+            'mehta.fyi,www.mehta.fyi,ashish.mehta.fyi,www.ashish.mehta.fyi',
+        ).split(',')
+        if hostname.strip()
+    }
     
     RECAPTCHA_SECRET_KEY = os.environ['RECAPTCHA_SECRET_KEY']
 

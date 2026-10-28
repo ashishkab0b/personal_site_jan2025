@@ -1,5 +1,6 @@
 import { Box, Divider, Link, Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useOutletContext } from 'react-router-dom';
 import { appointments, education, employment, grants, publications } from '../content/cv';
 
 const sections = [
@@ -105,6 +106,8 @@ CvEntries.propTypes = {
 };
 
 export default function CvPage() {
+  const { onContact } = useOutletContext();
+
   return (
     <Box sx={{ maxWidth: '1100px', mx: 'auto', pb: 4, overflowWrap: 'break-word' }}>
       <Box
@@ -118,7 +121,7 @@ export default function CvPage() {
           Curriculum Vitae
         </Typography>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={1} justifyContent="space-between">
-          <Link href="mailto:ashm@stanford.edu" underline="hover">
+          <Link component="button" type="button" onClick={onContact} underline="hover" sx={{ fontSize: '1rem', textAlign: 'left' }}>
             Contact
           </Link>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 0 }}>

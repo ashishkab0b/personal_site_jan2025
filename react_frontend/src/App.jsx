@@ -17,11 +17,13 @@ import ResearchIntro from './components/ResearchIntro';
 import AdminPage from './components/AdminPage';
 import AnalyticsBeacon from './components/AnalyticsBeacon';
 import CvPage from './components/CvPage';
+import EmailDialog from './components/EmailDialog';
 
 const drawerWidth = 260;
 
 function SiteLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [emailOpen, setEmailOpen] = useState(false);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -33,7 +35,12 @@ function SiteLayout() {
     setMobileOpen(!mobileOpen);
   };
 
-  const drawer = <SideNav onNavigate={() => setMobileOpen(false)} />;
+  const handleContact = () => {
+    setMobileOpen(false);
+    setEmailOpen(true);
+  };
+
+  const drawer = <SideNav onNavigate={() => setMobileOpen(false)} onContact={handleContact} />;
 
   return (
     <>
@@ -106,8 +113,9 @@ function SiteLayout() {
         }}
       >
         <Toolbar />
-        <Outlet />
+        <Outlet context={{ onContact: handleContact }} />
       </Box>
+      <EmailDialog open={emailOpen} onClose={() => setEmailOpen(false)} />
     </>
   );
 }

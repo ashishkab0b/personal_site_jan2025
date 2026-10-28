@@ -32,7 +32,7 @@ const StyledAvatar = styled(Avatar)({
   marginBottom: '1rem',
 });
 
-export default function SideNav({ onNavigate }) {
+export default function SideNav({ onNavigate, onContact }) {
   const { pathname } = useLocation();
 
 
@@ -130,7 +130,7 @@ export default function SideNav({ onNavigate }) {
         {/* Direct email contact */}
         <ListItem disablePadding>
           <Tooltip title="Send me a message" arrow placement="right">
-            <ListItemButton component="a" href="mailto:ashm@stanford.edu">
+            <ListItemButton onClick={onContact}>
               <ListItemText primary="Contact" />
             </ListItemButton>
           </Tooltip>
@@ -176,4 +176,5 @@ export default function SideNav({ onNavigate }) {
 
 SideNav.propTypes = {
   onNavigate: PropTypes.func,
+  onContact: PropTypes.func.isRequired,
 };
