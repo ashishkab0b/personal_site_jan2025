@@ -109,7 +109,7 @@ export default function EmailDialog({ open, onClose }) {
       </DialogContent>
       <DialogActions sx={{ p: 2 }}>
         <Button onClick={onClose}>Close</Button>
-        {email ? <Button component="a" href={`mailto:${email}`}>Open email app</Button> : error && <Button onClick={() => setAttempt(value => value + 1)}>Try again</Button>}
+        {!email && error && <Button onClick={() => setAttempt(value => value + 1)}>Try again</Button>}
       </DialogActions>
     </Dialog>
   );
