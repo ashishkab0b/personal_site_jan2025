@@ -1,6 +1,7 @@
 services:
 
   flask-backend:
+    restart: unless-stopped
     build:
       context: ./flask_app
       dockerfile: Dockerfile
@@ -16,6 +17,7 @@ services:
       - FLASK_ENV=production
 
   nginx:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./nginx/Dockerfile
